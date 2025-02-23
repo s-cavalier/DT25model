@@ -36,7 +36,7 @@ class TimeSeriesModel:
         # tensor_X = scaled_X.reshape(1, 10, 21)
         # prediction = self.model.predict(tensor_X, batch_size = 1)
         # return prediction[0][0]
-        if (mode == "True"):
+        if (mode == True):
             batch, timesteps, features = data.shape
         
             # Reshape to 2D for scaling (shape: (batch*timesteps, features))
