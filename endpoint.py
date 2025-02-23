@@ -32,8 +32,9 @@ async def model(body: dict):
         
         body = { 
             "VALIDATOR": "10-SEQUENCE", 
-            "DATAFRAME": df1.to_numpy(dtype = np.float32).reshape(1,10,21).tolist()
+            "DATAFRAME": [df1.to_numpy(dtype = np.float32).tolist()]
         }
+        #print(body["DATAFRAME"])
     if body["VALIDATOR"] == "10-SEQUENCE":
         print("\n🔹 Received Data from Backend")
         
