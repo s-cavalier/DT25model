@@ -57,7 +57,7 @@ async def model(body: dict):
         # Pass input to the model
         print("hello")
         #need to change mode based on what is needed, True is for continuous, false is for csv
-        output = SINGLETON.predict(LSTM_input, True)  # Already shaped correctly
+        output = SINGLETON.predict(LSTM_input, body["TYPE"])  # Already shaped correctly
         print("passes at the output")
         prediction_result = {
             "VALIDATOR": "GOOD",

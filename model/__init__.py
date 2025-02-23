@@ -6,7 +6,7 @@ print('--------------------------------')
 
 import tensorflow as tf
 from sklearn.preprocessing import MinMaxScaler
-
+import pandas as pd
 class TimeSeriesModel:
     def create_sequences(data, n_steps_in, n_steps_out):
         """
@@ -53,6 +53,11 @@ class TimeSeriesModel:
             return prediction[0][0]
         
         else:
+            data = data.pd.Dataframe(data)
+            data.dropna()
+            data["Timestamp"] = data["Timestamp"].str.strip('"')
+            data["Timestamp"] = pd.to_datetime(data["Timestamp"])
+            data = data.to_numpy(dtype= np.float32)
             scaler = MinMaxScaler(feature_range=(0, 1))
             scaled_X = scaler.fit_transform(data)
             tensor_X = scaled_X.reshape(1, 10, 21)
