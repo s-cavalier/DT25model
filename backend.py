@@ -64,6 +64,7 @@ def send_to_model():
 
     payload = {
         "VALIDATOR": "10-SEQUENCE",
+        "TYPE": False,
         "DATAFRAME": data  # Properly formatted input
     }
 

@@ -24,7 +24,16 @@ async def model(body: dict):
     """Receives RTDE data from backend.py and predicts using the model."""
     if "VALIDATOR" not in body:
         return Response(status_code=404, content="Bad request.")
-
+    if body["TYPE"]:
+        df1 = pd.DataFrame(body["DATAFRAME"])
+        df1.dropna()
+        df1["Timestamp"] = df1["Timestamp"].str.strip('"')
+        df1["Timestamp"] = pd.to_datetime(df1["Timestamp"])
+        
+        body = { 
+            "VALIDATOR": "10-SEQUENCE", 
+            "DATAFRAME": df1.to_numpy(dtype = np.float32).tolist()
+        }
     if body["VALIDATOR"] == "10-SEQUENCE":
         print("\n🔹 Received Data from Backend")
         
