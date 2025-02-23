@@ -46,7 +46,7 @@ async def model(body: dict):
         print("\n🔹 Received Data Shape from Backend:", LSTM_input.shape)
 
         # Check that the shape matches the expected (1, 10, 21)
-        if LSTM_input.shape != (1, 10, 21):
+        if LSTM_input.shape != (1, 10, 20):
             print("\n❌ Shape Mismatch: Expected (1, 10, 21), Got", LSTM_input.shape)
             return {
                 "VALIDATOR": "ERROR",

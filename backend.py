@@ -28,11 +28,11 @@ def preprocess_data_for_model():
         "Timestamp","Current_J0", "Current_J1", "Current_J2", "Current_J3", "Current_J4", "Current_J5",
         "Temperature_T0", "Temperature_T1", "Temperature_T2", "Temperature_T3", "Temperature_T4", "Temperature_T5",
         "Speed_J0", "Speed_J1", "Speed_J2", "Speed_J3", "Speed_J4", "Speed_J5",
-        "Tool_current", "robot_fail"  # 21 features
+        "Tool_current"  # 21 features
     ]
 
     # Ensure feature count is correct
-    if len(feature_columns) != 21:
+    if len(feature_columns) != 20:
         print("\n❌ Error: Feature column count mismatch! Expected 21, but got", len(feature_columns))
 
     df_filtered = np.array([[entry[col] for col in feature_columns] for entry in df])
@@ -48,7 +48,7 @@ def preprocess_data_for_model():
     print("\n🔹 Shape after scaling:", scaled_X.shape)  # Should still be (10, 21)
 
     # Reshape to (1, 10, 21) for LSTM model input
-    formatted_data = scaled_X.reshape(1, 10, 21)
+    formatted_data = scaled_X.reshape(1, 10, 20)
 
     # Debug print for final shape
     print("\n✅ Final shape before sending to model:", formatted_data.shape)  # Should be (1, 10, 21)

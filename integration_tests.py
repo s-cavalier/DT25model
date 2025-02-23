@@ -11,7 +11,7 @@ def static_access(dataframe: pd.DataFrame):
     from model import SINGLETON
 
     rows = randint(2, 7000)
-    df_subset = dataframe.iloc[rows:(rows + 10), 1:22]  
+    df_subset = dataframe.iloc[rows:(rows + 10), 1:21]  
     LSTMinput = df_subset.to_numpy(dtype=np.float32)
 
     # Now pass it to the model
@@ -30,7 +30,7 @@ def static_access(dataframe: pd.DataFrame):
 def ping_server(dataframe: pd.DataFrame):
     # Ensure that the DataFrame has exactly 10 rows and 21 columns.
     # Adjust slicing if needed. Here, we take the first 10 rows and columns 1 to 22.
-    df_subset = dataframe.iloc[:10, 0:22]
+    df_subset = dataframe.iloc[:10, 0:21]
     df_subset['Timestamp'] = df_subset['Timestamp'].str.strip('"')
 
     df_subset['Timestamp'] = pd.to_datetime(df_subset['Timestamp'])
@@ -40,8 +40,10 @@ def ping_server(dataframe: pd.DataFrame):
     # Wrap the 2D array in an outer list to create a 3D array (shape: (1,10,21))
     body = { 
         "VALIDATOR": "10-SEQUENCE", 
+        "TYPE": "False",
         "DATAFRAME": [arr.tolist()] 
     }
+    print(body["DATAFRAME"])
     
     # Send POST request with JSON data
     response = requests.post("http://localhost:9054/model", json=body)
@@ -55,6 +57,6 @@ def ping_server(dataframe: pd.DataFrame):
 
 df = pd.read_excel("dataset.xlsx") # Toy example
 df.dropna()
-df_subset = df.iloc[0:11, 1:22]  
+df_subset = df.iloc[0:11, 1:21]  
 
 ping_server(df_subset)

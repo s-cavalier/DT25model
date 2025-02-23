@@ -60,7 +60,7 @@ class TimeSeriesModel:
             data = data.to_numpy(dtype= np.float32)
             scaler = MinMaxScaler(feature_range=(0, 1))
             scaled_X = scaler.fit_transform(data)
-            tensor_X = scaled_X.reshape(1, 10, 21)
+            tensor_X = scaled_X.reshape(1, 10, 20)
             prediction = self.model.predict(tensor_X, batch_size = 1)
             return prediction[0][0]
         
