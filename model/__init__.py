@@ -26,6 +26,7 @@ class TimeSeriesModel:
     def __init__(self):
         self.model = tf.keras.models.load_model('model/saved_model.h5')
         self.model.summary()
+        self.cache = (0,False)
     
     def predict(self, data: np.ndarray,mode):
         """Takes in 10 np arrays of size 22, outputs bool"""
