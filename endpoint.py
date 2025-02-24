@@ -81,7 +81,7 @@ async def model(body: dict):
         print("-" * 50)
         #SINGLETON.cache = prediction_result
         #print(f"This is the singlton cache {SINGLETON.cache}")
-        return SINGLETON.cache
+        return prediction_result
 
     return {"VALIDATOR": "ERROR", "TYPE": "Unknown validator."}
 
