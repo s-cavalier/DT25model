@@ -19,6 +19,10 @@ app.add_middleware(
     allow_headers=["Authorization", "Content-Type"]
 )
 
+
+@app.get("/continue")
+async def grab():
+    return SINGLETON.cache
 @app.post("/model")
 async def model(body: dict):
     """Receives RTDE data from backend.py and predicts using the model."""
@@ -55,23 +59,25 @@ async def model(body: dict):
             }
 
         # Pass input to the model
-        print("hello")
+        #print("hello")
         #need to change mode based on what is needed, True is for continuous, false is for csv
         output = SINGLETON.predict(LSTM_input, True)  # Already shaped correctly
-        print("passes at the output")
+        
         prediction_result = {
             "VALIDATOR": "GOOD",
             "RAW-OUTPUT": float(output),
             "ROUND-OUTPUT": int(output + 0.5)
         }
-
+        SINGLETON.cache.cache = (prediction_result['RAW-OUTPUT'],True)
+        print("passes at the output")
         # Print Model Predictions
         print("\n🔹 Model Prediction:")
         print(f"➡ Raw Output: {prediction_result['RAW-OUTPUT']}")
         print(f"➡ Rounded Output: {prediction_result['ROUND-OUTPUT']}")
         print("-" * 50)
-
-        return prediction_result
+        #SINGLETON.cache = prediction_result
+        #print(f"This is the singlton cache {SINGLETON.cache}")
+        return SINGLETON.cache
 
     return {"VALIDATOR": "ERROR", "TYPE": "Unknown validator."}
 
