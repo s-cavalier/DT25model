@@ -22,7 +22,11 @@ app.add_middleware(
 
 @app.get("/continue")
 async def grab():
-    return SINGLETON.cache
+    if SINGLETON.cache[1] == False:
+        return -1
+    else:
+        SINGLETON.cache[1] = False
+        return SINGLETON.cache[0]
 @app.post("/model")
 async def model(body: dict):
     """Receives RTDE data from backend.py and predicts using the model."""
@@ -68,7 +72,7 @@ async def model(body: dict):
             "RAW-OUTPUT": float(output),
             "ROUND-OUTPUT": int(output + 0.5)
         }
-        SINGLETON.cache.cache = (prediction_result['RAW-OUTPUT'],True)
+        SINGLETON.cache.cache = [prediction_result['RAW-OUTPUT'],True]
         print("passes at the output")
         # Print Model Predictions
         print("\n🔹 Model Prediction:")
