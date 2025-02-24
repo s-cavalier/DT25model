@@ -72,7 +72,7 @@ async def model(body: dict):
             "RAW-OUTPUT": float(output),
             "ROUND-OUTPUT": int(output + 0.5)
         }
-        SINGLETON.cache.cache = [prediction_result['RAW-OUTPUT'],True]
+        SINGLETON.cache = [prediction_result['RAW-OUTPUT'],True]
         print("passes at the output")
         # Print Model Predictions
         print("\n🔹 Model Prediction:")
